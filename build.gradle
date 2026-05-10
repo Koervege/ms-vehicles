@@ -2,6 +2,8 @@ plugins {
     id 'groovy'
     id 'org.springframework.boot' version '4.0.0'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+
 }
 
 group = 'com.appsweb/.'
@@ -22,7 +24,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:5.0.1'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
-    implementation 'org.apache.groovy:groovy'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
@@ -39,4 +40,13 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << '-parameters'
+
+    // This will print to your console even without --info
+    doFirst {
+        logger.lifecycle ">>> TASK RUNNING: ${name} with args: ${options.allCompilerArgs}"
+    }
 }

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    image: postgres:latest
+    image: postgres:17
     container_name: vehicles-db
     environment:
       POSTGRES_DB: vehicles_db
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - vehicles_data:/var/lib/postgresql/data
+      - vehicles_data:/var/lib/postgresql
 
   app:
     build: .

@@ -1,21 +1,19 @@
-package com.appsweb.vehicles
+package com.appsweb.vehicles;
 
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.cloud.client.loadbalancer.LoadBalanced
-import org.springframework.context.annotation.Bean
-import org.springframework.web.client.RestTemplate
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-class VehiclesApplication {
-
-    static void main(String[] args) {
-        SpringApplication.run(VehiclesApplication, args)
+public class VehiclesApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(VehiclesApplication.class, args);
     }
 
     @Bean
-    //@LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 }
