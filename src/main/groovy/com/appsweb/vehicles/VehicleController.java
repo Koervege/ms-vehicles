@@ -111,4 +111,45 @@ public class VehicleController {
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(vehicles);
     }
+
+    @Operation(summary = "Update a vehicle by ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Vehicle updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found for the given ID"),
+            @ApiResponse(responseCode = "400", description = "Invalid vehicle data provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PutMapping("/id/{id}")
+    public ResponseEntity<Vehicle> update(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+        return service.updateVehicle(id, vehicle)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Delete a vehicle by ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Vehicle deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found for the given ID"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        return service.deleteVehicle(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "Update the status of a vehicle by ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Vehicle status updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found for the given ID"),
+            @ApiResponse(responseCode = "400", description = "Invalid status value"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PutMapping("/id/{id}/status")
+    public ResponseEntity<Vehicle> updateStatus(@PathVariable Long id, @RequestParam Boolean status) {
+        return service.updateStatus(id, status)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

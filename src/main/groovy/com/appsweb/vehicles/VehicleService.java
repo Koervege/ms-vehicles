@@ -37,4 +37,27 @@ public class VehicleService {
     public  Optional<Vehicle> findById(@NonNull Long id) {
         return repository.findById(id);
     }
+
+    public Optional<Vehicle> updateVehicle(Long id, Vehicle updated) {
+        return repository.findById(id).map(existing -> {
+            existing.setBrand(updated.getBrand());
+            existing.setModel(updated.getModel());
+            existing.setStatus(updated.getStatus());
+            return repository.save(existing);
+        });
+    }
+
+    public boolean deleteVehicle(Long id) {
+        return repository.findById(id).map(existing -> {
+            repository.deleteById(id);
+            return true;
+        }).orElse(false);
+    }
+
+    public Optional<Vehicle> updateStatus(Long id, Boolean status) {
+        return repository.findById(id).map(existing -> {
+            existing.setStatus(status);
+            return repository.save(existing);
+        });
+    }
 }
