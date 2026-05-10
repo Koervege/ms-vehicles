@@ -5,15 +5,41 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "vehicles")
-@Schema(description = "Vehicle information with identification, model, brand, and availability status")
+@Schema(
+        description = "Represents a vehicle record in the system",
+        name = "Vehicle"
+)
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(
+            description = "Unique identifier of the vehicle",
+            example = "1",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     private Long id;
 
+    @Schema(
+            description = "Brand/manufacturer of the vehicle",
+            example = "Toyota",
+            minLength = 1,
+            maxLength = 100
+    )
     private String brand;
+
+    @Schema(
+            description = "Model name of the vehicle",
+            example = "Corolla",
+            minLength = 1,
+            maxLength = 100
+    )
     private String model;
+
+    @Schema(
+            description = "Availability status of the vehicle. True = available, False = unavailable",
+            example = "true"
+    )
     private Boolean status;
 
     public Long getId() { return id; }
