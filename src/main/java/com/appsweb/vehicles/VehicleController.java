@@ -90,7 +90,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/model/{model}")
-    public ResponseEntity<List<Vehicle>> getByModel(@RequestParam String model) {
+    public ResponseEntity<List<Vehicle>> getByModel(@PathVariable String model) {
         List<Vehicle> vehicles = service.findByModel(model);
         return vehicles.isEmpty()
                 ? ResponseEntity.noContent().build()
@@ -105,7 +105,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<Vehicle>> getByStatus(@RequestParam Boolean status) {
+    public ResponseEntity<List<Vehicle>> getByStatus(@PathVariable Boolean status) {
         List<Vehicle> vehicles = service.findByStatus(status);
         return vehicles.isEmpty()
                 ? ResponseEntity.noContent().build()
