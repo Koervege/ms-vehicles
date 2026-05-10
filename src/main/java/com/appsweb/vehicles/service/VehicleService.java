@@ -1,5 +1,7 @@
-package com.appsweb.vehicles;
+package com.appsweb.vehicles.service;
 
+import com.appsweb.vehicles.model.Vehicle;
+import com.appsweb.vehicles.repository.VehicleRepository;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import java.util.List;

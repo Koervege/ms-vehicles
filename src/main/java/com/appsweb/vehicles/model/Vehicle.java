@@ -1,4 +1,4 @@
-package com.appsweb.vehicles;
+package com.appsweb.vehicles.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;

@@ -1,5 +1,6 @@
-package com.appsweb.vehicles;
+package com.appsweb.vehicles.repository;
 
+import com.appsweb.vehicles.model.Vehicle;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
