@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,6 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/vehicles")
 @Tag(name = "Vehicle", description = "Vehicle management API")
 public class VehicleController {
@@ -46,6 +48,7 @@ public class VehicleController {
     })
     @PostMapping
     public ResponseEntity<Vehicle> create(@RequestBody Vehicle vehicle) {
+        log.info("Crating vehicle for brand: {} and model: {}", vehicle.getBrand(), vehicle.getModel());
         Vehicle saved = service.saveVehicle(vehicle);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -73,6 +76,7 @@ public class VehicleController {
     })
     @GetMapping
     public ResponseEntity<List<Vehicle>> getAll() {
+      log.info("Getting all vehicles...");
         List<Vehicle> vehicles = service.getAllVehicles();
         return vehicles.isEmpty()
                 ? ResponseEntity.noContent().build()
@@ -101,6 +105,7 @@ public class VehicleController {
     public ResponseEntity<List<Vehicle>> getByBrand(
             @Parameter(description = "Brand/manufacturer to filter by", example = "Toyota")
             @PathVariable String brand) {
+      log.info("Getting vehicles of brand: {}", brand);
         List<Vehicle> vehicles = service.findByBrand(brand);
         return vehicles.isEmpty()
                 ? ResponseEntity.noContent().build()
@@ -129,6 +134,7 @@ public class VehicleController {
     public ResponseEntity<Vehicle> getById(
             @Parameter(description = "Unique identifier of the vehicle", example = "1")
             @PathVariable Long id) {
+      log.info("Getting vehicle with id: {}", id);
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -156,6 +162,7 @@ public class VehicleController {
     public ResponseEntity<List<Vehicle>> getByModel(
             @Parameter(description = "Model name to filter by", example = "Corolla")
             @PathVariable String model) {
+      log.info("Getting vehicles of model: {}", model);
         List<Vehicle> vehicles = service.findByModel(model);
         return vehicles.isEmpty()
                 ? ResponseEntity.noContent().build()
@@ -184,6 +191,7 @@ public class VehicleController {
     public ResponseEntity<List<Vehicle>> getByStatus(
             @Parameter(description = "Availability status to filter by. true = available, false = unavailable", example = "true")
             @PathVariable Boolean status) {
+      log.info("Getting vehicles with status: {}", status);
         List<Vehicle> vehicles = service.findByStatus(status);
         return vehicles.isEmpty()
                 ? ResponseEntity.noContent().build()
@@ -213,6 +221,7 @@ public class VehicleController {
             @Parameter(description = "Unique identifier of the vehicle to update", example = "1")
             @PathVariable Long id,
             @RequestBody Vehicle vehicle) {
+      log.info("Updating vehicle with id: {id}");
         return service.updateVehicle(id, vehicle)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -234,6 +243,7 @@ public class VehicleController {
     public ResponseEntity<Void> delete(
             @Parameter(description = "Unique identifier of the vehicle to delete", example = "1")
             @PathVariable Long id) {
+      log.info("Deleting vehicle with id: {}", id);
         return service.deleteVehicle(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
@@ -263,6 +273,7 @@ public class VehicleController {
             @PathVariable Long id,
             @Parameter(description = "New availability status. true = available, false = unavailable", example = "false")
             @PathVariable Boolean status) {
+      log.info("Updating status for vehicle with id: {}", id);
         return service.updateStatus(id, status)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

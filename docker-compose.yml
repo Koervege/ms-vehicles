@@ -21,7 +21,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/vehicles_db
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
-      EUREKA_CLIENT_ENABLED: "false"
+      EUREKA_CLIENT_ENABLED: "true"
     depends_on:
       - db
 
