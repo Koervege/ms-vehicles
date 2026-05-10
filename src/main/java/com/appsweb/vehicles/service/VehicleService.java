@@ -1,5 +1,7 @@
-package com.appsweb.vehicles;
+package com.appsweb.vehicles.service;
 
+import com.appsweb.vehicles.model.Vehicle;
+import com.appsweb.vehicles.repository.VehicleRepository;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -15,6 +17,8 @@ public class VehicleService {
     }
 
     public Vehicle saveVehicle(Vehicle vehicle) {
+        validateVehicle(vehicle);
+
         return repository.save(vehicle);
     }
 
@@ -39,6 +43,7 @@ public class VehicleService {
     }
 
     public Optional<Vehicle> updateVehicle(Long id, Vehicle updated) {
+        validateVehicle(updated);
         return repository.findById(id).map(existing -> {
             existing.setBrand(updated.getBrand());
             existing.setModel(updated.getModel());
@@ -59,5 +64,14 @@ public class VehicleService {
             existing.setStatus(status);
             return repository.save(existing);
         });
+    }
+
+    private void validateVehicle(Vehicle vehicle) {
+        if (vehicle.getBrand() == null || vehicle.getBrand().isBlank())
+            throw new IllegalArgumentException("Brand is required");
+        if (vehicle.getModel() == null || vehicle.getModel().isBlank())
+            throw new IllegalArgumentException("Model is required");
+        if (vehicle.getStatus() == null)
+            throw new IllegalArgumentException("Status is required");
     }
 }
