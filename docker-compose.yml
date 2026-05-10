@@ -9,3 +9,16 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+
+  app:
+    build: .
+    container_name: ms-vehicles
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/vehicles_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      eureka_url: http://localhost:8761/eureka
+    depends_on:
+      - db
